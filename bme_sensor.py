@@ -5,11 +5,16 @@ from json import dumps
 import json
 from datetime import date, datetime
 import requests
-import firebase_admin
 import os
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
+
+port = 1
+address = 0x76
+bus = smbus2.SMBus(port)
+bme280.load_calibration_params(bus, address)
+
 
 def main():
     cred = credentials.Certificate(os.getenv('GOOGLE_APPLICATION_CREDENTIALS'))
@@ -21,16 +26,11 @@ def main():
     # #     json_data = json.load(json_file)
     #
     # post_firebase(bme280_db, json_data)
-
-    port = 1
-    address = 0x76
-    bus = smbus2.SMBus(port)
-
-    bme280.load_calibration_params(bus, address)
-
+    
     data = {}
     data['reading'] = []
 
+    read_data(bus, address, data, db)
 
 def firebase_creds(credentials, firebase_db_url):
     # Initialize the app with a custom auth variable, limiting the server's access
@@ -77,7 +77,7 @@ def read_data(bus, address, data, db):
         print(data)
         sleep(10)
 
-        post_firebase(data, db)
+        post_firebase(db, data)
 
         # with open('data.json', 'w') as json_file:
         #     json.dump(data, json_file)
