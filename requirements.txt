@@ -1,0 +1,8 @@
+bme280==0.5
+certifi==2019.9.11
+chardet==3.0.4
+idna==2.8
+python-firebase==1.2
+requests==2.22.0
+smbus2==0.3.0
+urllib3==1.25.7
