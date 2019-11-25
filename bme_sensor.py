@@ -55,21 +55,20 @@ def json_serial(obj):
 
 def read_data(bus, address, db):
     while True:
-        data = {}
-        data['reading'] = []
+        
         bme280_data = bme280.sample(bus, address)
         id = bme280_data.id
         timestamp = bme280_data.timestamp
         humidity = bme280_data.humidity
         pressure = bme280_data.pressure
         ambient_temperature = bme280_data.temperature
-        data['reading'].append({
+        data = {
             'id': str(id),
             'timestamp': str(timestamp),
             'humidity': humidity,
             'pressure': pressure,
             'ambient_temperature': ambient_temperature
-            })
+            }
 
         print(id, timestamp, humidity, pressure, ambient_temperature)
         print(bme280_data)
