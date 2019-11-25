@@ -26,11 +26,8 @@ def main():
     # #     json_data = json.load(json_file)
     #
     # post_firebase(bme280_db, json_data)
-    
-    data = {}
-    data['reading'] = []
 
-    read_data(bus, address, data, db)
+    read_data(bus, address, db)
 
 def firebase_creds(credentials, firebase_db_url):
     # Initialize the app with a custom auth variable, limiting the server's access
@@ -56,8 +53,10 @@ def json_serial(obj):
     raise TypeError ("Type %s not serializable" % type(obj))
 
 
-def read_data(bus, address, data, db):
+def read_data(bus, address, db):
     while True:
+        data = {}
+        data['reading'] = []
         bme280_data = bme280.sample(bus, address)
         id = bme280_data.id
         timestamp = bme280_data.timestamp
