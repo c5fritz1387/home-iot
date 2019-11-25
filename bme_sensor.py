@@ -15,7 +15,7 @@ def main():
     cred = credentials.Certificate(os.getenv('GOOGLE_APPLICATION_CREDENTIALS'))
     url = os.getenv('FIREBASE_DB_URL')
 
-    bme280_db = firebase_creds(cred, url)
+    db = firebase_creds(cred, url)
 
     # # with open('data.json', 'r') as json_file:
     # #     json_data = json.load(json_file)
@@ -56,7 +56,7 @@ def json_serial(obj):
     raise TypeError ("Type %s not serializable" % type(obj))
 
 
-def read_data(bus, address, data):
+def read_data(bus, address, data, db):
     while True:
         bme280_data = bme280.sample(bus, address)
         id = bme280_data.id
@@ -77,7 +77,7 @@ def read_data(bus, address, data):
         print(data)
         sleep(10)
 
-        post_firebase(data)
+        post_firebase(data, db)
 
         # with open('data.json', 'w') as json_file:
         #     json.dump(data, json_file)
