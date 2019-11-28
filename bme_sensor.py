@@ -27,8 +27,10 @@ def main():
     # #     json_data = json.load(json_file)
     #
     # post_firebase(bme280_db, json_data)
+    data = {}
+    data['reading'] = []
 
-    read_data(bus, address, db)
+    read_data(bus, address, data, db)
 
 def firebase_creds(credentials, firebase_db_url):
     # Initialize the app with a custom auth variable, limiting the server's access
