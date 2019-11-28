@@ -4,6 +4,8 @@ from time import sleep
 from json import dumps
 import json
 from datetime import date, datetime
+import requests
+import firebase_admin
 import os
 import firebase_admin
 from firebase_admin import credentials
@@ -12,7 +14,6 @@ from firebase_admin import db
 port = 1
 address = 0x76
 bus = smbus2.SMBus(port)
-
 bme280.load_calibration_params(bus, address)
 
 
@@ -27,10 +28,7 @@ def main():
     #
     # post_firebase(bme280_db, json_data)
 
-
-    data = {}
-    data['reading'] = []
-
+    read_data(bus, address, db)
 
 def firebase_creds(credentials, firebase_db_url):
     # Initialize the app with a custom auth variable, limiting the server's access
@@ -64,13 +62,13 @@ def read_data(bus, address, data, db):
         humidity = bme280_data.humidity
         pressure = bme280_data.pressure
         ambient_temperature = bme280_data.temperature
-        data = {
+        data['reading'].append({
             'id': str(id),
             'timestamp': str(timestamp),
             'humidity': humidity,
             'pressure': pressure,
             'ambient_temperature': ambient_temperature
-            }
+            })
 
         print(id, timestamp, humidity, pressure, ambient_temperature)
         print(bme280_data)
