@@ -24,10 +24,11 @@ def main():
     #
 
     data = {}
-    data['reading'] = []
+    data['reading'] = {}
     sensor_data = read_data(bus, address, data, publisher, topic_path)
 
 def publish_message(data, publisher, topic_path):
+    data = json.dumps(data)
     # Data must be a bytestring
     data_encode = data.encode('utf-8')
     # When you publish a message, the client returns a future.
@@ -43,7 +44,7 @@ def read_data(bus, address, data, publisher, topic_path):
         humidity = bme280_data.humidity
         pressure = bme280_data.pressure
         ambient_temperature = bme280_data.temperature
-        data = {
+        data['reading'] = {
             'id': str(id),
             'timestamp': str(timestamp),
             'humidity': humidity,
