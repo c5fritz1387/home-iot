@@ -14,7 +14,7 @@ sudo journalctl -u bme_pubsub.service
 /lib/systemd/system/bme_pubsub.service
 
 
-TODO:
+## TODO:
 ~~- move to more stable bme library:https://github.com/pimoroni/bme280-python~~
 
 ~~- fix systemd service to use virtualenv and working bme280 library~~
