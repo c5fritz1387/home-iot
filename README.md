@@ -4,8 +4,11 @@ repository for home iot projects
 ## systemd service details
 
 sudo systemctl daemon-reload
+
 sudo systemctl start bme_pubsub.service 
+
 sudo systemctl stop bme_pubsub.service 
+
 sudo journalctl -u bme_pubsub.service
 
 /lib/systemd/system/bme_pubsub.service
