@@ -4,13 +4,15 @@ from time import sleep
 from json import dumps
 import json
 from google.cloud import pubsub
+from google.cloud import storage
+import os
+import datetime
 
 port = 1
 address = 0x76
 bus = smbus2.SMBus(port)
 
-bme280.load_calibration_params(bus, address)
-
+calibration_params = bme280.load_calibration_params(bus, address)
 
 def main():
     project_id = "home-weather-iot-firebase"
@@ -38,9 +40,9 @@ def publish_message(data, publisher, topic_path):
 
 def read_data(bus, address, data, publisher, topic_path):
     while True:
-        bme280_data = bme280.sample(bus, address)
+        bme280_data = bme280.sample(bus, address, calibration_params)
         id = bme280_data.id
-        timestamp = bme280_data.timestamp
+        timestamp = datetime.datetime.utcnow()
         humidity = bme280_data.humidity
         pressure = bme280_data.pressure
         ambient_temperature = bme280_data.temperature
