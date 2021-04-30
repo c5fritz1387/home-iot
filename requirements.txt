@@ -31,7 +31,7 @@ pyasn1-modules==0.2.8
 pytz==2020.1
 requests==2.24.0
 RPi.bme280==0.2.3
-rsa==4.6
+rsa==4.7
 six==1.15.0
 smbus==1.1.post2
 smbus2==0.3.0
